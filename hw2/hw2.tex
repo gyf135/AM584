@@ -1,0 +1,246 @@
+
+\documentclass[10pt]{article}
+
+\usepackage{graphicx}
+\usepackage{amsmath,amsfonts,amssymb}
+
+\usepackage{hyperref}  % for urls and hyperlinks
+
+
+\setlength{\textwidth}{6.2in}
+\setlength{\oddsidemargin}{0.3in}
+\setlength{\evensidemargin}{0in}
+\setlength{\textheight}{8.9in}
+\setlength{\voffset}{-1in}
+\setlength{\headsep}{26pt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+
+
+\input{../latex/macros.tex}
+
+
+\begin{document}
+
+% header:
+\hfill \vbox{
+\hbox{AMath 584 / Math 584}
+\hbox{Homework \#2}
+\hbox{Due 11:00pm PDT}
+\hbox{Tuesday, October 25, 2016}
+}
+
+
+\vskip 0.5cm
+
+{\bf Name:}   Yifei Guan
+
+{\bf Netid:}  gyf135
+
+\vskip 0.5cm
+
+%--------------------------------------------------------------------------
+\vskip 1cm
+\hrule
+{\bf Problem 1.}
+Find (by hand) both the reduced and full SVD of the matrix
+\[
+A = \bcm 0&3\\ 2&0\\ 0&4\ecm.
+\]
+Remember that things should be ordered so that $\sigma_1 \geq \sigma_2$.
+
+Use the SVD to determine the following:
+\begin{itemize}
+\item The best rank-1 approximation to $A$.
+\item The 2-norm of $A$.
+\item A basis for the linear subspace $\{x \in \reals^2:
+      \|Ax\|_2 = \|A\|_2 \|x\|_2\}$ and the dimension of this space.
+\item A basis for the orthogonal complement of the range of $A$.
+\item A basis for the null space of $A^T$.
+\end{itemize}
+
+% uncomment the next two lines if you want to insert solution...
+\vskip 1cm
+{\bf Solution:}\\
+Finding the SVD of A consists of calculating the eigenvalues and eigenvectors of $AA^T$ and $A^TA$. The eigenvectors of $A^TA$ make up the columns of V, the eigenvectors of $AA^T$ make up the columns of U and the singular values in $\Sigma$ are square roots of eigenvalues from $AA^T$ or $A^TA$. The singular values are diagonal entries of the $\Sigma$ matrix and are arranged in descending order. The singular values are always real numbers. Since the matrix A is a real matrix, U and V are also real.\\
+\centerline {Let $B = AA^T = \bcm 0&3\\ 2&0\\ 0&4\ecm \bcm 0&2&0\\ 3&0&4\ecm = \bcm 9&0&12\\0&4&0\\12&0&16\\\ecm$}\\
+\centerline {Let $C = A^TA = \bcm4&0\\0&25\ecm$}\\
+To find the eigenvalues and eigenvectors, we can solve $det(B - \lambda I) = 0$ for $\lambda$ where $det$ denotes the determinant and $\lambda$ is the eigenvalues of matrix B. Then we find that the eigenvalues of B are $\lambda_1 = 25, \lambda_2 = 4, and \lambda_3 = 0$. Note that $\lambda_1 $ and $\lambda_2$ are the eigenvalues of matrix C. For eigenvalues, we can calculate the eigenvectors respectively. As for $\lambda_1$, $BV_{B1} = \lambda_1V_{B1} \Rightarrow V_{B1} = \bcm 0.6\\0\\0.8\ecm$ and $CV_{C1} = \lambda_1V_{C1} \Rightarrow V_{C1} = \bcm 0\\1\ecm$. As for $\lambda_2$, $BV_{B2} = \lambda_2V_{B2} \Rightarrow V_{B2} = \bcm 0\\1\\0\ecm$ and $CV_{C2} = \lambda_2V_{C2} \Rightarrow V_{C2} = \bcm 1\\0\ecm$. As for $\lambda_3$, $BV_{B3} = \lambda_3V_{B3} = 0 \Rightarrow V_{B3} = \bcm 0.8\\0\\-0.6\ecm$.\\
+Now that we have calculated the eigenvalues and eigenvectors. The full SVD of matrix A can be written as:\\
+\centerline {$U = \bcm 0.6&0&0.8\\0&1&0\\0.8&0&-0.6\ecm$, $\Sigma = \bcm 5&0\\0&2\\0&0\ecm$ and $V = \bcm 0&1\\1&0\ecm$}\\
+Double check that $U\Sigma V^* = A$ (Always needed since the eigenvectors can be of opposite sign).\\
+Since the matrix A is of rank 2, there are only two singular values. The reduce SVD of matrix A can be interpreted as:\\
+\centerline {$\hat{U} = \bcm 0.6&0\\0&1\\0.8&0\ecm$, $\hat{\Sigma} = \bcm 5&0\\0&2\ecm$ and $V = \bcm 0&1\\1&0\ecm$}\\
+Double check that $\hat{U}\hat{\Sigma} V^* = A$\\
+
+The best rank-1 approximation is thus $u_1\sigma_1 v_1^* = 5 \bcm 0.6\\0\\0.8\ecm \bcm 0&1\ecm = \bcm 0&3\\0&0\\0&4\ecm$\\
+where $u_1$ and $v_1$ is the first column in matrix $U$ and $V$ respectively. And $\sigma_1$ is the largest singular value\\
+
+The 2-norm of A: $\parallel A\parallel_2 = \sigma_1 = 5$\\
+
+To interpret the subspace, let $x = \bcm x_1\\x_2\ecm$, and $Ax = \bcm 3x_2\\2x_1\\4x_2\ecm$. Then the subspace should satisfy $[(3x_2)^2+(2x_1)^2+(4x_2)^2]^\frac{1}{2} = 5 \times (x_1^2+x_2^2)^\frac{1}{2} \Rightarrow x_1 = 0$ and $x_2 \in R$.\\
+Therefore, the basis of the subspace is $\{\bcm 0\\1\ecm\}$ and thus the subspace is just a line. Therefore the dimension of subspace is 1.\\
+
+The $range(A) = Ax = \bcm 3x_2\\2x_1\\4x_2\ecm$, $\forall x_1,x_2 \in R$. And thus the orthogonal complement is $\bcm y_1\\y_2\\y_3\ecm$, $\{y_1, y_2, y_3 \in \mathbb{R} : x^Ty = 0\}$. In order to make the equation $x^Ty = 0$ true $\forall x_1,x_2 \in \mathbb{R}$, $y_2 = 0$ and $y_3 = -\frac{3}{4}y_1$. Therefore, the orthogonal complement of the range of matrix A is $Y = y_1\bcm 1\\0\\-\frac{3}{4}\ecm$. And the basis of it is $\bcm 1\\0\\-\frac{3}{4}\ecm$\\
+
+$A^T = \bcm 0&2&0\\3&0&4\ecm$ and let $A^Tx = 0 \Rightarrow \bcm 0&2&0\\3&0&4\ecm \bcm x_1\\x_2\\x_3\ecm = \bcm 2x_2\\3x_1+4x_3\ecm = \bcm 0\\0\ecm$. Solve the equation, we have $x_2 = 0$ and $x_3 = -\frac{3}{4}x_1$. Therefore, the basis for the null space of $A^T$ is $\bcm 1\\0\\-\frac{3}{4}\ecm$\\
+
+In fact, it can be shown that if the subspace is described as the range of a matrix, then the orthogonal complement is the set of vectors orthogonal to the rows of $A$, which is the nullspace of $A^T$
+
+
+
+
+% insert your solution here!
+
+
+%--------------------------------------------------------------------------
+\vskip 1cm
+\hrule
+{\bf Problem 2.}
+Determine by hand the SVD of the matrix
+\[
+A = \bcm 17&1\\ 6&18\ecm.
+\]
+Hint: one right singular vector is
+\[
+v_1 = \bcm 1/\sqrt{2}\\ 1/\sqrt{2} \ecm.
+\]
+
+
+% uncomment the next two lines if you want to insert solution...
+\vskip 1cm
+{\bf Solution:}
+Based on the fact that the right singular vector is unitary, we can solve it with $v_1 = \bcm \frac{1}{\sqrt{2}}\\\frac{1}{\sqrt{2}}\ecm$\\, which gives:\\
+\centerline {$V = \bcm \frac{1}{\sqrt{2}}&\frac{1}{\sqrt{2}}\\\frac{1}{\sqrt{2}}&-\frac{1}{\sqrt{2}}\ecm$} \\
+\centerline {$AV = \bcm 17&1\\6&18\ecm \bcm\frac{1}{\sqrt{2}}&\frac{1}{\sqrt{2}}\\\frac{1}{\sqrt{2}}&-\frac{1}{\sqrt{2}}\ecm = \bcm\frac{18}{\sqrt{2}}&\frac{16}{\sqrt{2}}\\\frac{24}{\sqrt{2}}&-\frac{12}{\sqrt{2}}\ecm $}\\
+
+Notice that $U\Sigma = AV = \bcm\frac{18}{\sqrt{2}}&\frac{16}{\sqrt{2}}\\\frac{24}{\sqrt{2}}&-\frac{12}{\sqrt{2}}\ecm$. Since $U$ is also a unitary matrix, it can be solved that $U = \bcm \frac{3}{5}&\frac{4}{5}\\\frac{4}{5}&-\frac{3}{5}\ecm$ and $\Sigma = \bcm \frac{30}{\sqrt{2}}&0\\0&\frac{20}{\sqrt{2}}\ecm$
+% insert your solution here!
+
+
+%--------------------------------------------------------------------------
+\vskip 1cm
+\hrule
+{\bf Problem 3.}
+Exercise 6.1 in Trefethen and Bau.  In addition,
+illustrate with a sketch showing the effect of $A = I-2P$ on a typical vector
+$v$ for the case
+\[
+P = \frac 1 5 \bcm 1&2\\2&4\ecm.
+\]
+Also explain why a matrix $A$ of this form is sometimes called a
+``reflector''.  {\bf Hint:} See also Figure 10.2 in the book and the
+discussion for the case of a ``Householder reflector''.
+
+
+% uncomment the next two lines if you want to insert solution...
+\vskip 1cm
+Exercise 6.1:\\
+If P is an orthogonal projector, then I - 2P is unitary.\\
+{\bf Solution:}\\
+\centerline {$(I-2P)(I-2P)^* = (I-2P)(I-2P^*) = I - 2P - 2P^* + 4PP^*$}\\
+And since for orthogonal projector, $P = P^* = P^2$, the equation above becomes:\\
+\centerline {$(I-2P)(I-2P)^* = I - 2P - 2P + 4P^2 = I - 4P + 4P = I$}\\
+Therefore, $I-2P$ is unitary.\\
+
+Let $P = \frac{1}{5}\bcm 1&2\\2&4\ecm$ and then $A = I - 2P = \bcm 1&0\\0&1\ecm - \frac{2}{5}\bcm 1&2\\2&4\ecm = \bcm \frac{3}{5}&-\frac{2}{5}\\-\frac{2}{5}&-\frac{3}{5}\ecm$\\
+As for a general vector $v = \bcm v_1\\v_2\ecm$, we have $Av = \bcm \frac{3}{5}v_1 - \frac{2}{5}v_2\\- \frac{2}{5}v_1 - \frac{3}{5}v_2\ecm$
+
+
+% insert your solution here!
+
+%--------------------------------------------------------------------------
+\vskip 1cm
+\hrule
+{\bf Problem 4.}
+Exercise 6.3 in Trefethen and Bau.  Use the SVD to do this.
+
+
+% uncomment the next two lines if you want to insert solution...
+\vskip 1cm
+Exercise 6.3\\
+Given $A \in \mathbb{C}^{m \times n}$ with $m leq n$, show that $A^*A$ is nonsingular if and only if $A$ has full rank.\\
+{\bf Solution:}\\
+Perform SVD for matrix $A$ and let $A = U\Sigma V^*$. Then $A$ is of full rank if and only if $\Sigma$ is of full rank. Since $A^*A = V\Sigma^*\Sigma V^*$, to regard this as an eigenvalue decomposition, $A^*A$ is non-singular if and only if all eigenvalues are non-zero which means the diagonal matrix $\Sigma$ doesn't have zero on its diagonal and thus it is full rank. Therefore, $A^*A$ is nonsingular if and only if $A$ has full rank.\\
+% insert your solution here!
+
+
+%--------------------------------------------------------------------------
+\vskip 1cm
+\hrule
+{\bf Problem 5.}
+Exercise 6.4 in Trefethen and Bau.
+
+
+% uncomment the next two lines if you want to insert solution...
+\vskip 1cm
+Exercise 6.4\\
+$A = \bcm 1&0\\0&1\\1&0\ecm$ and $B = \bcm 1&2\\0&1\\1&0\ecm$
+{\bf Solution:}\\
+$range(A) = <\bcm \frac{1}{\sqrt{2}}\\0\\\frac{1}{\sqrt{2}}\ecm,\bcm0\\1\\0\ecm>$\\
+and $range(B) = <\bcm \frac{1}{\sqrt{2}}\\0\\\frac{1}{\sqrt{2}}\ecm,\bcm\frac{2}{\sqrt{5}}\\\frac{1}{\sqrt{5}}\\0\ecm>$\\
+(a)From equation 6.13, \\
+\centerline {$P_A = A(A^*A)^{-1}A^* = \bcm 0.5&0&0.5\\0&1&0\\0.5&0&0.5\ecm$}\\
+And the image under $P$ of the vector $(1,2,3)^*$ is:\\
+\centerline {$ \bcm 0.5&0&0.5\\0&1&0\\0.5&0&0.5\ecm \bcm 1\\2\\3\ecm = \bcm 2&2&2\ecm$}\\
+(b) Same approach on B:\\
+ \centerline {$P_B = B(B^*B)^{-1}B^* = \frac{1}{6}\bcm 5&2&1\\2&2&-2\\1&-2&5\ecm$}\\
+And the image under $P$ of the vector $(1,2,3)^*$ is:\\
+\centerline {$\frac{1}{6}\bcm 5&2&1\\2&2&-2\\1&-2&5\ecm \bcm 1\\2\\3\ecm = \bcm 2&0&2\ecm$}\\
+
+% insert your solution here!
+
+
+%--------------------------------------------------------------------------
+\vskip 1cm
+\hrule
+{\bf Problem 6.}
+Exercise 7.1 in Trefethen and Bau.
+
+
+% uncomment the next two lines if you want to insert solution...
+%\vskip 1cm
+%{\bf Solution:}
+
+% insert your solution here!
+
+%--------------------------------------------------------------------------
+\vskip 1cm
+\hrule
+{\bf Problem 7.}
+Exercise 7.2 in Trefethen and Bau.
+
+
+% uncomment the next two lines if you want to insert solution...
+%\vskip 1cm
+%{\bf Solution:}
+
+% insert your solution here!
+
+%--------------------------------------------------------------------------
+\vskip 1cm
+\hrule
+{\bf Problem 8.}
+Exercise 8.2 in Trefethen and Bau.
+
+You can write a Python function instead of Matlab if you prefer.
+
+Test your routine on the matrices from Exercise 6.4 of Trefethen and Bau
+and submit your output.
+
+Test it on other matrices of different sizes to convince yourself it is
+working properly. You do not need to turn in more output, but submit the
+code in a file {\tt mgs.m} or {\tt mgs.py} in a way that we can test it on other
+matrices of our choosing.
+
+Please write readable code!
+
+
+% uncomment the next two lines if you want to insert solution...
+%\vskip 1cm
+%{\bf Solution:}
+
+% insert your solution here!
+
+\end{document}
+
